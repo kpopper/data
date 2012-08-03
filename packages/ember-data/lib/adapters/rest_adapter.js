@@ -11,7 +11,7 @@ DS.RESTAdapter = DS.Adapter.extend({
     var root = this.rootForType(type);
 
     var data = {};
-    data[root] = record.toJSON();
+    data[root] = this.serializeRecord(record);
 
     this.ajax(this.buildURL(root), "POST", {
       data: data,
@@ -39,7 +39,7 @@ DS.RESTAdapter = DS.Adapter.extend({
 
     var data = {};
     data[plural] = records.map(function(record) {
-      return record.toJSON();
+      return this.serializeRecord(record);
     });
 
     this.ajax(this.buildURL(root), "POST", {
@@ -302,6 +302,10 @@ DS.RESTAdapter = DS.Adapter.extend({
     }
 
     return url.join("/");
+  },
+  
+  serializeRecord: function(record) {
+    return record.toJSON();
   }
 });
 
