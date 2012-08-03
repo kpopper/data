@@ -63,7 +63,7 @@ DS.RESTAdapter = DS.Adapter.extend({
     var root = this.rootForType(type);
 
     var data = {};
-    data[root] = record.toJSON();
+    data[root] = this.serializeRecord(record);
 
     this.ajax(this.buildURL(root, id), "PUT", {
       data: data,
@@ -91,7 +91,7 @@ DS.RESTAdapter = DS.Adapter.extend({
 
     var data = {};
     data[plural] = records.map(function(record) {
-      return record.toJSON();
+      return this.serializeRecord(record);
     });
 
     this.ajax(this.buildURL(root, "bulk"), "PUT", {
